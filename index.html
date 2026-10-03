@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en-US"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="ShuFee Words: a pocket Levantine Arabic dictionary and a daily vocabulary trainer. 1,432 Lebanese words and phrases in small daily sets, in Arabic script or Arabizi.">
+<title>ShuFee Words — A cup of words a day</title>
+<link rel="icon" href="icon.png">
+<style>
+@font-face{font-family:"Bricolage";src:url(bricolage-bold.woff) format("woff");font-weight:700;font-display:swap}
+:root{color-scheme:light;--bg:#FAF6EE;--surface:#FFFDF9;--ink:#1E2A22;--muted:#5D6A60;--line:#E6DFD1;--cedar:#195E3F;--cedar2:#24774F;--mint:#D5F0E0;--mintink:#0F452E;--sand:#F5DEB9;--sandink:#663D12;--coral:#963635;--peach:#FDE2E1;--red:#C8412C;--teal:#2E9C97;
+--display:"Bricolage","Avenir Next","Segoe UI",system-ui,sans-serif;--body:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;--arabic:"Geeza Pro","Noto Naskh Arabic","Noto Sans Arabic","Segoe UI",sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.65 var(--body);overflow-x:hidden}
+a{color:inherit;text-underline-offset:4px}a:hover{color:var(--cedar)}:focus-visible{outline:3px solid var(--red);outline-offset:4px;border-radius:6px}
+h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.02em;text-wrap:balance;margin:0}
+h1{font-size:clamp(44px,7.4vw,86px);line-height:.98}h2{font-size:clamp(32px,4.6vw,52px);line-height:1.05;margin-bottom:18px}h3{font-size:21px;line-height:1.25;margin:0 0 8px}
+p{margin:0 0 16px}.wrap{max-width:1120px;margin:0 auto;padding-inline:24px}.eyebrow{display:inline-block;text-transform:uppercase;letter-spacing:.16em;font-size:12.5px;font-weight:750;color:var(--cedar);margin-bottom:14px}
+.lede{font-size:20px;color:var(--muted);max-width:620px}small,.small{font-size:14px;color:var(--muted)}[lang=ar]{font-family:var(--arabic)}
+.btn{display:inline-flex;align-items:center;gap:10px;white-space:nowrap;background:var(--cedar);color:#fff;text-decoration:none;font-weight:650;padding:13px 20px;border-radius:18px;transition:transform .2s,background .2s,box-shadow .2s;box-shadow:0 6px 18px rgba(25,94,63,.22)}.btn:hover{color:#fff;background:var(--cedar2);transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:none;border:1.5px solid var(--line)}.btn.ghost:hover{color:var(--cedar);border-color:var(--cedar)}
+/* nav */
+nav.top{position:sticky;top:0;z-index:50;background:rgba(250,246,238,.82);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
+nav.top.scrolled{border-bottom-color:var(--line)}nav.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;font:700 26px var(--display);text-decoration:none;white-space:nowrap}.brand svg{width:40px;height:40px}
+.links{display:flex;gap:22px;align-items:center;font-size:16px}.links a{text-decoration:none;font-weight:550}.links .btn{padding:9px 16px;border-radius:14px;font-size:15px}
+/* hero */
+.hero{position:relative;padding-block:72px 40px;overflow:hidden}.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+.hero h1 .accent{color:var(--cedar);display:inline-block}.hero .lede{margin:22px 0 14px}.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:26px 0 14px}
+.cupstage{position:relative;aspect-ratio:1;max-width:460px;width:100%;justify-self:center}.cupstage .halo{position:absolute;inset:6%;border-radius:50%;background:radial-gradient(circle at 50% 45%,var(--mint),rgba(213,240,224,0) 68%)}
+.cupstage .bigcup{position:absolute;inset:14% 14% 4% 6%;transition:transform .2s linear}.bigcup svg{width:100%;height:100%;overflow:visible}
+.bubble{position:absolute;right:4%;top:6%;min-width:120px;background:var(--cedar);color:#fff;border-radius:22px;padding:12px 18px 10px;text-align:center;box-shadow:0 14px 34px rgba(25,94,63,.28);animation:bob 6s ease-in-out -1s infinite;z-index:2}
+.bubble::after{content:"";position:absolute;left:22px;bottom:-12px;border:8px solid transparent;border-top:12px solid var(--cedar);border-left:12px solid var(--cedar)}
+.bubble .ar{display:block;font:700 34px/1.25 var(--arabic);transition:opacity .35s,transform .35s}.bubble .lat{display:block;font-size:14px;font-weight:650;opacity:.85;transition:opacity .35s}.bubble.swap .ar,.bubble.swap .lat{opacity:0;transform:translateY(4px)}
+.float{position:absolute;font:700 clamp(28px,4vw,54px)/1 var(--arabic);color:var(--cedar);opacity:.16;pointer-events:none;will-change:transform}
+.badge{position:absolute;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:8px 14px;font-size:14px;font-weight:650;box-shadow:0 10px 30px rgba(30,42,34,.08);white-space:nowrap;z-index:2}
+.badge b{color:var(--cedar)}.b1{left:-4%;top:30%;animation:bob 6.5s ease-in-out -3s infinite}.b2{right:-2%;top:62%;animation:bob 7s ease-in-out -2s infinite}.b3{left:6%;bottom:6%;animation:bob 6.5s ease-in-out -4s infinite}
+@keyframes bob{50%{transform:translateY(-10px)}}
+/* steam */
+.steam path{animation:steam 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}.steam path:nth-child(2){animation-delay:-1.1s}.steam path:nth-child(3){animation-delay:-2.2s}
+@keyframes steam{0%{opacity:0;transform:translateY(6px) scaleY(.7)}30%{opacity:1}70%{opacity:.9}100%{opacity:0;transform:translateY(-10px) scaleY(1.1)}}
+.blink{animation:blink 5s infinite;transform-box:fill-box;transform-origin:center}@keyframes blink{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+/* marquee */
+.marquee{border-block:1px solid var(--line);background:var(--surface);padding-block:14px;overflow:hidden;display:grid;gap:10px}
+.track{display:flex;gap:14px;width:max-content;animation:marq 64s linear infinite}.track.rev{animation-direction:reverse;animation-duration:76s}
+.chip{display:inline-flex;gap:10px;align-items:baseline;border-radius:999px;background:var(--bg);border:1px solid var(--line);padding:7px 16px;font-size:15px;white-space:nowrap}.chip b{font-weight:700}.chip .ar{font:600 19px var(--arabic);color:var(--cedar)}.chip i{font-style:normal;color:var(--muted)}
+.marquee:hover .track{animation-play-state:paused}@keyframes marq{to{transform:translateX(-50%)}}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-block:56px 24px}.stat{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:22px 24px}
+.stat .num{font:700 clamp(40px,5vw,60px)/1 var(--display);color:var(--cedar);font-variant-numeric:tabular-nums}.stat .lbl{color:var(--muted);font-size:16px;margin-top:6px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}.card{background:var(--mint);border-radius:26px;padding:28px}.card p{margin:0}.card.sand{background:var(--sand)}.card.sand h3{color:var(--sandink)}
+.steps4{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;padding:0;list-style:none}.steps4 li{background:rgba(255,253,249,.7);border-radius:999px;padding:4px 12px;font-size:14px;font-weight:650;color:var(--mintink)}
+section{scroll-margin-top:80px}.sec{padding-block:88px}.sec.alt{background:linear-gradient(180deg,var(--bg),#F3EEE2 30%,#F3EEE2 70%,var(--bg))}
+/* phone */
+.phone{position:relative;width:330px;max-width:100%;border-radius:54px;background:#101814;padding:12px;box-shadow:0 30px 70px rgba(30,42,34,.28),inset 0 0 0 2px #2a352e}
+.phone .screen{position:relative;border-radius:43px;overflow:hidden;background:var(--bg);aspect-ratio:390/847}.phone .island{position:absolute;top:22px;left:50%;width:96px;height:28px;margin-left:-48px;background:#101814;border-radius:20px;z-index:5}
+/* match game */
+.quizgrid{display:grid;grid-template-columns:1fr 360px;gap:56px;align-items:center}.quizgrid .phone{justify-self:center}
+.app{position:absolute;inset:0;display:flex;flex-direction:column;padding:62px 16px 18px;font-size:14px;line-height:1.4}
+.app .bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.app .x{width:30px;height:30px;border-radius:50%;background:var(--surface);display:grid;place-items:center;color:var(--cedar);font-size:16px;box-shadow:0 1px 0 var(--line)}
+.app .title{font-size:10.5px;letter-spacing:.18em;font-weight:750;color:var(--muted)}.segs{display:flex;gap:3px;margin-bottom:12px}.segs i{flex:1;height:5px;border-radius:3px;background:var(--line);transition:background .4s}.segs i.ok{background:var(--cedar)}.segs i.now{box-shadow:0 0 0 1.5px var(--cedar)}
+.pill{align-self:center;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:12px;font-size:11.5px;font-weight:650;color:var(--ink)}
+.app h4{font:700 18px var(--display);margin:0 0 2px}.app .sub{color:var(--muted);font-size:12px;margin-bottom:12px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.tile{font:inherit;text-align:left;border:1.5px solid transparent;background:var(--surface);color:var(--ink);border-radius:14px;padding:8px 10px;min-height:56px;cursor:pointer;transition:transform .15s,border-color .2s,background .3s,opacity .3s;display:flex;flex-direction:column;justify-content:center}
+.tile:hover:not(:disabled){border-color:#b9cdbf;transform:translateY(-1px)}.tile .lat{font-weight:650;font-size:13.5px}.tile .ar{font:600 16px/1.3 var(--arabic);text-align:right;color:var(--ink)}
+.tile.mean{align-items:center;justify-content:center;text-align:center;font-weight:650;font-size:13.5px}
+.tile.sel{border-color:var(--cedar);background:var(--mint)}.tile.done{background:#E3F3E9;opacity:.5;cursor:default}.tile.miss{border-color:var(--coral);background:var(--peach);animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.fb{margin-top:12px;border-radius:18px;padding:10px 12px;display:grid;grid-template-columns:64px 1fr;gap:2px 10px;align-items:center;transform:translateY(16px);opacity:0;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s}
+.fb.show{transform:none;opacity:1}.fb.good{background:var(--mint)}.fb.bad{background:var(--peach)}.fb .mini{grid-row:span 2;width:64px;height:40px}.fb .mini svg{width:100%;height:100%}.fb strong{font:700 14.5px var(--display)}.fb.good strong{color:var(--mintink)}.fb.bad strong{color:var(--coral)}.fb span{font-size:12px;color:var(--ink)}
+.next{margin-top:auto;font:650 15px var(--body);border:0;border-radius:15px;padding:12px 16px;background:var(--cedar);color:#fff;display:flex;justify-content:space-between;cursor:pointer}.next:disabled{background:#b8c9bd;cursor:default}
+.result{position:absolute;inset:0;padding:70px 20px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--bg);opacity:0;pointer-events:none;transition:opacity .4s}.result.show{opacity:1;pointer-events:auto}
+.result .rcup{width:150px;height:150px}.result h4{font:700 26px/1.1 var(--display);margin:6px 0 8px}.result p{font-size:13.5px;color:var(--muted)}.result .btn{font-size:14px;padding:11px 16px;margin-top:4px}.result button.again{margin-top:12px;font:600 14px var(--body);background:none;border:0;color:var(--cedar);cursor:pointer;text-decoration:underline}
+/* tour */
+.tour{display:grid;grid-template-columns:1fr 1fr;gap:64px}.tour .stick{position:sticky;top:110px;height:calc(100vh - 140px);display:flex;align-items:flex-start;justify-content:center}
+.tour .stick .phone{width:min(330px,calc((100vh - 170px) * .46))}.shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transform:scale(1.04);transition:opacity .55s,transform .7s cubic-bezier(.2,.8,.2,1)}.shot.on{opacity:1;transform:none}
+.step{min-height:70vh;display:flex;flex-direction:column;justify-content:center;padding-block:20px}.step .n{font:700 15px var(--display);color:var(--cedar);display:flex;align-items:center;gap:10px;margin-bottom:10px}.step .n i{display:inline-block;height:2px;width:34px;background:var(--cedar);border-radius:2px}
+.step h3{font-size:clamp(28px,3.4vw,40px);line-height:1.08;margin-bottom:14px}.step p{color:var(--muted);max-width:460px}.step .inline{display:none}.step:first-child{min-height:56vh}
+/* inside */
+.newgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.newcard{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:26px;transition:transform .25s,box-shadow .25s}.newcard:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(30,42,34,.08)}
+.newcard .ic{width:44px;height:44px;border-radius:14px;background:var(--mint);display:grid;place-items:center;margin-bottom:14px;color:var(--cedar)}.newcard .ic svg{width:22px;height:22px}.newcard p{margin:0;color:var(--muted);font-size:16.5px}.newcard a{color:var(--cedar);font-weight:650}
+/* together */
+.together{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:32px;padding:40px;margin-top:40px}
+.together .flow{display:grid;gap:10px}.fl{background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}.fl .ar{font:700 26px var(--arabic);color:var(--cedar)}.fl small{display:block}
+.fl.go{background:var(--mint);border-color:#b9dcc6;font-weight:650;color:var(--mintink)}.arrow{justify-self:center;color:var(--cedar);font-size:20px;line-height:1}
+.forms{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.forms>span{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:8px 10px;font-size:14px;text-align:center}.forms b{display:block;font-size:15px}
+/* support */
+.faq{display:grid;gap:10px;max-width:820px;margin-top:24px}details{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:0 22px;transition:border-color .2s}details[open]{border-color:#b9cdbf}
+summary{cursor:pointer;list-style:none;font:700 18px/1.35 var(--display);padding:18px 32px 18px 0;position:relative}summary::-webkit-details-marker{display:none}summary::after{content:"+";position:absolute;right:0;top:14px;font-size:26px;color:var(--cedar);transition:transform .25s}details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--muted);margin-bottom:18px}.privacy h3{margin-top:26px}.privacy p{max-width:760px}
+footer{border-top:1px solid var(--line);padding-block:36px 48px;color:var(--muted);font-size:15px}footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}footer .fam{display:flex;gap:10px;flex-wrap:wrap}
+/* reveal */
+.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}.js .reveal.in{opacity:1;transform:none}
+.js .stagger>*{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s cubic-bezier(.2,.8,.2,1)}.js .stagger.in>*{opacity:1;transform:none}
+.stagger.in>*:nth-child(2){transition-delay:.08s}.stagger.in>*:nth-child(3){transition-delay:.16s}.stagger.in>*:nth-child(4){transition-delay:.24s}.stagger.in>*:nth-child(5){transition-delay:.32s}.stagger.in>*:nth-child(6){transition-delay:.4s}
+.js .hero .h-in{opacity:0;transform:translateY(24px);animation:hin .9s cubic-bezier(.2,.8,.2,1) forwards}.hero .d1{animation-delay:.05s!important}.hero .d2{animation-delay:.18s!important}.hero .d3{animation-delay:.3s!important}.hero .d4{animation-delay:.42s!important}@keyframes hin{to{opacity:1;transform:none}}
+.progress{position:fixed;left:0;top:0;height:3px;background:var(--cedar);width:100%;transform-origin:0 50%;transform:scaleX(0);z-index:60}
+@media (max-width:900px){.hero .wrap,.quizgrid,.together{grid-template-columns:1fr}.cupstage{max-width:300px;order:-1;margin-bottom:-10px}.step .inline .phone{margin-inline:auto}.stats{grid-template-columns:1fr 1fr}.newgrid{grid-template-columns:1fr 1fr}
+.tour{grid-template-columns:1fr;gap:0}.tour .stick{display:none}.step{min-height:0;padding-block:30px}.step .inline{display:block;margin-top:18px}.step .inline .phone{width:250px}.step .inline .shot{opacity:1;transform:none}.together{padding:28px}}
+@media (max-width:640px){body{font-size:17px}.links a:not(.btn){display:none}.cards,.newgrid{grid-template-columns:1fr}.sec{padding-block:64px}.hero{padding-top:40px}.badge{font-size:12px}.b1{left:0}.b2{right:0}.wrap{padding-inline:18px}.stats{gap:10px}.stat{padding:18px}.bubble{min-width:96px;padding:9px 14px 8px}.bubble .ar{font-size:26px}.together{padding:22px;border-radius:26px}.forms{grid-template-columns:1fr 1fr 1fr;gap:6px}.forms>span{padding:6px;font-size:12.5px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.js .reveal,.js .stagger>*,.js .hero .h-in{opacity:1;transform:none}html{scroll-behavior:auto}}
+</style></head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<nav class="top" aria-label="Main navigation"><div class="wrap">
+<a class="brand" href="#top" aria-label="ShuFee Words home"><span data-cup="happy" data-view="full" data-bubble="1"></span>ShuFee Words</a>
+<div class="links"><a href="#quiz">Try it</a><a href="#tour">Tour</a><a href="#inside">Inside</a><a href="#support">Support</a><a href="#privacy">Privacy</a><a class="btn" href="https://apps.apple.com/app/id6818874599">Get the app</a></div>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+<div>
+<span class="eyebrow h-in d1">New · From the makers of ShuFee</span>
+<h1 class="h-in d2">A cup of <span class="accent">words</span> a day.</h1>
+<p class="lede h-in d3">ShuFee Words is a pocket Levantine Arabic dictionary and a daily vocabulary trainer. A few new words each day, in small sets you meet, match, pick, and type, then gentle reviews that bring them back before they slip away.</p>
+<p class="h-in d3">1,432 everyday words and phrases, in Arabic script or Arabizi. The perfect companion to ShuFee’s verbs.</p>
+<div class="cta h-in d4"><a class="btn" href="https://apps.apple.com/app/id6818874599"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9s-2-.9-3.4-.9C5.9 6.8 4.2 7.8 3.3 9.5c-1.9 3.3-.5 8.1 1.3 10.8.9 1.3 2 2.7 3.4 2.7 1.4-.1 1.9-.9 3.5-.9s2.1.9 3.5.8c1.5 0 2.4-1.3 3.3-2.6 1-1.5 1.4-3 1.5-3-.1 0-2.9-1.1-2.9-4.3zM13.8 4.9c.7-.9 1.2-2.1 1.1-3.3-1 .1-2.3.7-3 1.6-.7.8-1.3 2-1.1 3.2 1.2.1 2.3-.6 3-1.5z"/></svg>Download on the App Store</a><a class="btn ghost" href="#quiz">Play a round ↓</a></div>
+<small class="h-in d4">For iPhone and iPad with iOS 17 or later. No account, no ads, and it all works offline.</small>
+</div>
+<div class="cupstage" aria-hidden="true">
+<div class="halo"></div>
+<span class="float" data-depth="0.6" style="left:2%;top:4%">ك</span><span class="float" data-depth="1.1" style="right:30%;top:-2%">ل</span><span class="float" data-depth="0.8" style="left:0;top:62%">م</span><span class="float" data-depth="1.4" style="right:6%;bottom:4%">ة</span><span class="float" data-depth="0.5" style="left:36%;top:6%">ق</span>
+<div class="bigcup" id="bigcup"><span data-cup="happy" data-view="full" data-steam="1"></span></div>
+<div class="bubble" id="bubble"><span class="ar" lang="ar" id="bub-ar">قهوة</span><span class="lat" id="bub-lat">2ahwe · coffee</span></div>
+<div class="badge b1">shukran · <b>thank you</b></div><div class="badge b2"><span lang="ar">بكرا</span> · tomorrow</div><div class="badge b3">Sa7! <b>✓</b></div>
+</div>
+</div></header>
+
+<div class="marquee" aria-label="Some of the words in ShuFee Words">
+<div class="track" id="t1"></div><div class="track rev" id="t2"></div>
+</div>
+
+<main>
+<div class="wrap">
+<div class="stats stagger" id="stats">
+<div class="stat"><div class="num" data-count="1432" data-sep="1">1,432</div><div class="lbl">Lebanese words and phrases</div></div>
+<div class="stat"><div class="num" data-count="322">322</div><div class="lbl">example sentences</div></div>
+<div class="stat"><div class="num" data-count="25">25</div><div class="lbl">topics in 6 starter themes</div></div>
+<div class="stat"><div class="num" data-count="8">8</div><div class="lbl">new words a day, or as many as you like</div></div>
+</div>
+<div class="cards stagger">
+<div class="card"><h3>Four quick steps per word</h3><ul class="steps4"><li>Meet</li><li>Match</li><li>Pick</li><li>Type</li></ul><p>Meet a small set of related words, match them to their meanings, pick each one, then type it from memory. Reviews bring every word back just as you’re about to forget it.</p></div>
+<div class="card sand"><h3>Lebanese, and part of the Levant</h3><p>Lebanese is the everyday Arabic of Lebanon, part of the Levantine family also spoken in Syria, Jordan, and Palestine. Local words and pronunciation vary; ShuFee Words focuses on Lebanese.</p></div>
+</div>
+</div>
+
+<section id="quiz" class="sec alt" aria-labelledby="quiz-heading"><div class="wrap quizgrid">
+<div class="reveal">
+<span class="eyebrow">Your first eight words</span>
+<h2 id="quiz-heading">A little match.<br>A little Lebanese.</h2>
+<p>This is Match, the quick game in ShuFee Words. Tap a Lebanese word, then its meaning. Two rounds, eight words, right in the app. No account needed.</p>
+<p class="small">Every word shows Arabizi and Arabic script, the way the app does. Arabizi spelling varies; ShuFee Words follows ShuFee’s Lebanese conventions. In the app, Match uses the words you’ve met, and it never changes your review schedule.</p>
+<noscript><p>Enable JavaScript to play. A first word: قهوة, 2ahwe, coffee.</p></noscript>
+</div>
+<div class="phone reveal" id="quizphone"><div class="island"></div><div class="screen">
+<div class="app" id="app">
+<div class="bar"><span class="x" aria-hidden="true">✕</span><span class="title">MATCH</span><span class="x" aria-hidden="true">⋯</span></div>
+<div class="segs" id="segs" aria-hidden="true"><i></i><i></i></div>
+<div class="pill" id="m-pill">Food and drink</div>
+<h4 id="m-title" tabindex="-1">Match · round 1 of 2</h4><div class="sub">Tap a Lebanese word, then its meaning.</div>
+<div class="tiles" id="tiles" role="group" aria-label="Words and meanings"></div>
+<div class="fb" id="fb" role="status" aria-live="polite"><span class="mini" id="fbcup"></span><strong id="fbtitle"></strong><span id="fbnote"></span></div>
+<button class="next" id="m-next" type="button" disabled><span id="nextlbl">Pair all four words</span><span aria-hidden="true">→</span></button>
+</div>
+<div class="result" id="m-result"><div class="rcup" id="rcup"></div><h4 id="m-score" tabindex="-1"></h4><p>That’s a taste. In ShuFee Words, meet eight new words a day, type them from memory, and look up 1,432 more in the dictionary.</p><a class="btn" href="https://apps.apple.com/app/id6818874599">Keep going, get ShuFee Words</a><button class="again" id="m-restart" type="button">Play again</button></div>
+</div></div>
+</div></section>
+
+<section id="tour" class="sec" aria-labelledby="tour-heading"><div class="wrap">
+<div class="reveal" style="max-width:720px"><span class="eyebrow">A look inside · ShuFee Words</span><h2 id="tour-heading">From mar7aba to 7abibi, one cup at a time.</h2><p class="lede">One clear button each day, short sessions, and a dictionary in your pocket. Scroll through the app.</p></div>
+<div class="tour">
+<div class="stick" aria-hidden="true"><div class="phone"><div class="island"></div><div class="screen" id="tourscreen">
+<img class="shot on" data-shot="0" src="shot-today.webp" alt=""><img class="shot" data-shot="1" src="shot-match.webp" alt="" loading="lazy"><img class="shot" data-shot="2" src="shot-mixup.webp" alt="" loading="lazy"><img class="shot" data-shot="3" src="shot-topics.webp" alt="" loading="lazy"><img class="shot" data-shot="4" src="shot-dictionary.webp" alt="" loading="lazy"><img class="shot" data-shot="5" src="shot-entry-verb.webp" alt="" loading="lazy"><img class="shot" data-shot="6" src="shot-progress.webp" alt="" loading="lazy">
+</div></div></div>
+<div class="steps">
+<div class="step" data-step="0"><div class="n"><i></i>01</div><h3>Your cup, every day.</h3><p>Today shows one button that always knows what’s next: continue a session, review what’s due, start today’s words, or learn a few more. Plus a word of the day and your streak.</p><div class="inline"><div class="phone"><div class="island"></div><div class="screen"><img class="shot" src="shot-today.webp" alt="Today screen: today’s cup is done, with a Learn 8 more button and the word of the day" loading="lazy"></div></div></div></div>
+<div class="step" data-step="1"><div class="n"><i></i>02</div><h3>Meet, then match.</h3><p>New words arrive in small sets from the same topic. Meet each one, then pair the set with its meanings. Every pair right the first time? The cup cheers.</p><div class="inline"><div class="phone"><div class="island"></div><div class="screen"><img class="shot" src="shot-match.webp" alt="Match round with all pairs found and a cheering cup" loading="lazy"></div></div></div></div>
+<div class="step" data-step="2"><div class="n"><i></i>03</div><h3>Mistakes that teach.</h3><p>Type another word by mistake and ShuFee Words tells you what you wrote and what you meant. Missed words come back once before the session ends, and again tomorrow.</p><div class="inline"><div class="phone"><div class="island"></div><div class="screen"><img class="shot" src="shot-mixup.webp" alt="Feedback showing the typed word kifak and the answer tamem 7amdilla" loading="lazy"></div></div></div></div>
+<div class="step" data-step="3"><div class="n"><i></i>04</div><h3>Six themes to start.</h3><p>Hello and thank you, people and family, core words, numbers and time, food and drink, and out and about: 25 topics in all. Pick any set to learn it next.</p><div class="inline"><div class="phone"><div class="island"></div><div class="screen"><img class="shot" src="shot-topics.webp" alt="Topics screen with themes and topics and their progress" loading="lazy"></div></div></div></div>
+<div class="step" data-step="4"><div class="n"><i></i>05</div><h3>A dictionary that forgives.</h3><p>Search in English, Arabizi, or Arabic, and don’t worry about spelling: 2ahwe, ahwe, and قهوة all find coffee. Save the words you want to keep close.</p><div class="inline"><div class="phone"><div class="island"></div><div class="screen"><img class="shot" src="shot-dictionary.webp" alt="Dictionary search for coffee with four meanings and a phrase" loading="lazy"></div></div></div></div>
+<div class="step" data-step="5"><div class="n"><i></i>06</div><h3>Every word, in context.</h3><p>Past and present for verbs, plurals for nouns, a guide to the stressed syllable, example sentences, and words from the same set. For verbs ShuFee teaches, one tap opens all eight people and four tenses.</p><div class="inline"><div class="phone"><div class="island"></div><div class="screen"><img class="shot" src="shot-entry-verb.webp" alt="Entry for shirib, to drink, with past and present forms and a Conjugate in ShuFee button" loading="lazy"></div></div></div></div>
+<div class="step" data-step="6"><div class="n"><i></i>07</div><h3>Reviews that stick.</h3><p>Words come back the next day, then after a few days, a week, two weeks, a month, and longer. A word counts as known once you’ve typed it right on three different days.</p><div class="inline"><div class="phone"><div class="island"></div><div class="screen"><img class="shot" src="shot-progress.webp" alt="Progress screen with this week’s chart and words that need a little attention" loading="lazy"></div></div></div></div>
+</div></div>
+<p class="small">Actual app screens from ShuFee Words. Progress shown is from a test session.</p>
+</div></section>
+
+<section id="inside" class="sec alt" aria-labelledby="inside-heading"><div class="wrap">
+<div class="reveal" style="max-width:760px"><span class="eyebrow">Inside · ShuFee Words 1.0</span><h2 id="inside-heading">Small cups. Real words.</h2><p class="lede">Built in the same calm style as ShuFee, for iPhone and iPad.</p></div>
+<div class="newgrid stagger">
+<div class="newcard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 9h12v4a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6zM17 10h1.5a2.5 2.5 0 0 1 0 5H17M9 3v3M13 3v3"/></svg></div><h3>A cup a day</h3><p>Eight new words a day, or anywhere from 5 to 20. Reviews come first, and you can always learn more after today’s cup.</p></div>
+<div class="newcard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg></div><h3>Match, any time</h3><p>A quick game with words you’ve already met, or with any set. Play as much as you like; it never changes your schedule.</p></div>
+<div class="newcard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h10M4 17h7"/></svg></div><h3>Friendly spelling</h3><p>ShuFee’s flexible Arabizi, like kh or 5 and ch or sh, plus one short vowel more or less in a longer word. Case, spacing, and punctuation never matter.</p></div>
+<div class="newcard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16v12H4zM8 10h.01M12 10h.01M16 10h.01M8 14h8"/></svg></div><h3>Arabic your way</h3><p>Answer in Arabizi or Arabic script. Vowel marks are off by default, the way Lebanese is usually written, and you never need to type them.</p></div>
+<div class="newcard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h11"/></svg></div><h3>Real sentences</h3><p>322 example sentences show words in use, with Arabizi in ShuFee’s Lebanese style and the Arabic beside it.</p></div>
+<div class="newcard"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></div><h3>Made to pair with ShuFee</h3><p>29 verbs link straight to ShuFee for full conjugations, with the same spelling in both apps. <a href="https://autatapragmata.github.io/shufee-support/">Meet ShuFee</a></p></div>
+</div>
+
+<div class="together reveal" aria-labelledby="together-heading">
+<div><span class="eyebrow">Better together</span><h2 id="together-heading" style="font-size:clamp(28px,3.6vw,40px)">Learn the word. Then make it yours.</h2><p style="color:var(--muted)">ShuFee Words teaches you <b>shirib</b>, to drink. ShuFee teaches you to say I drink, you drink, and we drink. When a word is one of ShuFee’s 51 verbs, tap <b>Conjugate in ShuFee</b> on its page.</p><a class="btn ghost" href="https://autatapragmata.github.io/">See both apps</a></div>
+<div class="flow" aria-hidden="true">
+<div class="fl"><div><b>shirib</b><small>to drink · ShuFee Words</small></div><span class="ar" lang="ar">شرب</span></div>
+<div class="arrow">↓</div>
+<div class="fl go"><span>Conjugate in ShuFee</span><span>↗</span></div>
+<div class="arrow">↓</div>
+<div class="forms"><span><b>beshrab</b>I drink</span><span><b>bteshrab</b>you drink</span><span><b>mneshrab</b>we drink</span></div>
+</div>
+</div>
+</div></section>
+
+<section id="support" class="sec" aria-labelledby="support-heading"><div class="wrap">
+<div class="reveal"><span class="eyebrow">Support</span><h2 id="support-heading">A little help.</h2><p>Questions, a word suggestion, or something not working? Get in touch.</p><a class="btn" href="mailto:shufee.app@gmail.com?subject=ShuFee%20Words">Email ShuFee Words support</a><p class="small" style="margin-top:12px">shufee.app@gmail.com · Include your app version, device model, and a brief description of the issue. Please avoid sending passwords or other sensitive information.</p></div>
+<div class="faq stagger">
+<details><summary>Where should I start?</summary><p>On Today, tap Start today’s words. ShuFee Words picks the next set for you, beginning with everyday greetings. Prefer a different topic? Open Topics, choose a set, and tap Make this my next set. For a quick guide, open Settings (the gear on Today) and choose How ShuFee Words works or Reading Arabizi.</p></details>
+<details><summary>How does a session work?</summary><p>New words come in four short steps. Meet each word, match the set to its meanings, pick each word from four choices, then type it. Words you miss come back once at the end of the session. Reviews start with picking and move on to typing as a word gets stronger.</p></details>
+<details><summary>When do words come back for review?</summary><p>A new word comes back the next day, then after longer and longer gaps: a few days, a week, two weeks, a month, and beyond. Get one wrong and it starts again from tomorrow. A word counts as known once you’ve typed it correctly on three different days. Reviews always come before new words on Today.</p></details>
+<details><summary>Can I learn more than eight words a day?</summary><p>Yes. After today’s cup, tap Learn 8 more on Today. To change the daily number, open Settings and set New words a day anywhere from 5 to 20.</p></details>
+<details><summary>Why was my spelling accepted, or shown differently?</summary><p>Arabizi has no official spelling. ShuFee Words accepts the same common variations as ShuFee, such as kh or 5, ch or sh, e or i, o or u, and doubled letters, plus one short vowel more or less inside a longer word and an optional final 2. Case, spacing, punctuation, and vowel marks never matter. When it accepts a variation, it shows the spelling it uses. If you type a different word from the set, it tells you which word you wrote.</p></details>
+<details><summary>Can I answer in Arabic script?</summary><p>Yes. In Settings, set Answer in to Arabic script. Arabic answers are accepted with or without vowel marks. To type Arabic, add the Arabic keyboard in your device’s Settings › General › Keyboard › Keyboards. The Vowel marks switch shows or hides harakat wherever Arabic appears; it’s off by default.</p></details>
+<details><summary>How does the dictionary work?</summary><p>Open Dictionary and search in English, Arabizi, or Arabic. Spelling can be loose. Filter by Words, Phrases, or Saved, and tap the bookmark on any word’s page to save it. Each page shows the word’s forms, a pronunciation guide with the stressed syllable marked, examples, and other words from the same set.</p></details>
+<details><summary>What does Conjugate in ShuFee do?</summary><p>For the 29 verbs that ShuFee also teaches, a word’s page offers Conjugate in ShuFee, where you can practice all eight people and four tenses. ShuFee is a separate app. If you don’t have it yet, the button opens ShuFee on the App Store.</p></details>
+<details><summary>Can I hear the words?</summary><p>Pronunciation recordings are on their way. When they arrive in an update, a listen button will appear beside words and examples, and Settings will let you choose a voice. Until then, each word’s Say it line shows its pronunciation, with an accent on the stressed syllable.</p></details>
+<details><summary>How do I turn off sounds or haptics?</summary><p>Use the Sounds and Haptics switches in Settings. Sound effects respect your device’s Silent mode.</p></details>
+<details><summary>Where is my progress?</summary><p>Your words, reviews, saved words, and preferences are stored on your device. ShuFee Words has no account or cloud-sync service, so removing the app may remove this progress. To start over, use Reset progress at the bottom of Settings.</p></details>
+</div></div></section>
+
+<section id="privacy" class="sec alt privacy" aria-labelledby="privacy-heading"><div class="wrap">
+<div class="reveal"><span class="eyebrow">Privacy</span><h2 id="privacy-heading">Your words are yours.</h2><p><strong>ShuFee Words privacy policy</strong><br><small>Effective October 3, 2026 · Applies to ShuFee Words 1.0 for iPhone and iPad.</small></p></div>
+<h3>Information in the app</h3><p>ShuFee Words does not require an account and does not collect or transmit your answers, review schedule, saved words, progress, or preferences to the developer. These records are saved locally using Apple’s device storage. The app contains no advertising or third-party analytics services, and it does not track you.</p>
+<h3>Audio and your voice</h3><p>Any pronunciation audio is bundled with the app; playing it sends nothing anywhere. ShuFee Words does not record your voice or request microphone access.</p>
+<h3>Links to ShuFee</h3><p>Conjugate in ShuFee opens the ShuFee app or its App Store page. No information about your learning is passed to ShuFee or the App Store.</p>
+<h3>Your choices</h3><p>You can change sound, haptic, and script preferences in the app, and reset your progress at any time. Removing the app removes its local data, subject to any backups managed by your device or Apple. Device backups and App Store purchases are governed by Apple’s services and privacy policies.</p>
+<h3>Support messages</h3><p>If you email support, we receive the email address and information you choose to send. We use this information to respond to your request and resolve the issue. You can request deletion of support correspondence by contacting shufee.app@gmail.com, subject to any records we must retain.</p>
+<h3>This website</h3><p>This support site uses no advertising, analytics scripts, or tracking cookies, and loads no third-party fonts or scripts. The Match game runs in your browser; your answers are not saved or sent to us. It is hosted on GitHub Pages. GitHub may process technical information, such as IP addresses, to operate and secure its hosting service. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub’s privacy statement</a>. Following an external link or sending email is subject to the relevant service provider’s practices.</p>
+<h3>Children and changes</h3><p>The app does not knowingly collect personal information from children. If a child sends personal information in a support message, contact us to request its deletion. Any changes to this policy will appear here with an updated effective date.</p>
+<h3>Contact</h3><p>For privacy questions, email <a href="mailto:shufee.app@gmail.com">shufee.app@gmail.com</a>.</p>
+</div></section>
+</main>
+<footer><div class="wrap"><span>A companion to ShuFee, published by Michael Kavalar in 2026.<br>© 2026 Michael Kavalar</span><span class="fam"><a class="btn ghost" href="https://autatapragmata.github.io/">All ShuFee apps</a><a class="btn ghost" href="#top">Back to top ↑</a></span></div></footer>
+
+<script>
+document.documentElement.classList.add('js');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* ---------- the ShuFee cup (same drawing as the apps); bubble = the ShuFee Words icon ---------- */
+function cupSVG(mood, t, view, steamAnim, bubble){
+  t = t || 0; const mix=(a,b)=>a+(b-a)*t;
+  const RED='#C8412C',TEAL='#2E9C97',LINE='#5C3F22',FACE='#4A3220',CH='#FBF8F1',ST='#B4A894';
+  const body='M9,44 Q11,55 21,61 Q27,98 40,116 Q44,121 52,121 L68,121 Q76,121 80,116 Q93,98 99,61 Q109,55 111,44 Z';
+  const id='c'+Math.random().toString(36).slice(2,8);
+  const tulip=(cx,cy,s,r)=>{let g=`<g transform="translate(${cx},${cy}) rotate(${r}) scale(${s})"><path d="M-6,-5 Q-6,7 0,8 Q6,7 6,-5 L3,-2 L0,-6 L-3,-2 Z" fill="${TEAL}"/><path d="M0,8 L0,38" stroke="${RED}" stroke-width="1.8" stroke-linecap="round"/>`;for(let y=13;y<37;y+=4)g+=`<path d="M0,${y} L-5,${y-3} M0,${y} L5,${y-3}" stroke="${RED}" stroke-width="1.7" stroke-linecap="round"/>`;return g+'</g>'};
+  let o=`<ellipse cx="60" cy="128" rx="30" ry="3.5" fill="${LINE}" opacity=".13"/><rect x="45" y="119" width="30" height="6" rx="2.5" fill="${CH}" stroke="${LINE}" stroke-width="2"/><path d="${body}" fill="${CH}"/><clipPath id="${id}"><path d="${body}"/></clipPath><g clip-path="url(#${id})">${tulip(60,80,.95,0)}${tulip(28,80,.85,-16)}${tulip(92,80,.85,16)}<path d="M45,114 Q35,96 46,77 Q52,96 45,114 Z" fill="${RED}"/><path d="M75,114 Q85,96 74,77 Q68,96 75,114 Z" fill="${RED}"/></g><path d="${body}" fill="none" stroke="${LINE}" stroke-width="2.6" stroke-linejoin="round"/><ellipse cx="60" cy="44" rx="51" ry="6.5" fill="${CH}" stroke="${LINE}" stroke-width="2.6"/><ellipse cx="60" cy="44.4" rx="45.5" ry="4.2" fill="#3A2418" stroke="#7A5232" stroke-width="1.4"/><circle cx="34" cy="67" r="3.6" fill="#E59A8C" opacity=".6"/><circle cx="86" cy="67" r="3.6" fill="#E59A8C" opacity=".6"/>`;
+  let steam=`<g class="${steamAnim?'steam':''}">`;
+  [46,60,74].forEach((x,i)=>{const sp=(i-1)*5;steam+=`<path d="M${x},${mix(38,40)} C${mix(x-6,x-5)},${mix(31,47)} ${mix(x+6,x+4)},${mix(25,51)} ${mix(x,x+sp)},${mix(18,56)}" fill="none" stroke="${ST}" stroke-width="${mix(3.2,3.6)}" stroke-linecap="round"/>`});
+  o+=steam+'</g>';
+  const f=`stroke="${FACE}" stroke-width="3.2" stroke-linecap="round" fill="none"`;
+  if(mood==='happy') o+=`<g class="blink"><path d="M42,61 Q46,65 50,61 M70,61 Q74,65 78,61" ${f}/></g><path d="M56,67 Q60,70 64,67" ${f}/>`;
+  if(mood==='cheer') o+=`<path d="M42,63 Q46,57 50,63 M70,63 Q74,57 78,63" ${f}/><path d="M54,65 Q60,74 66,65 Z" fill="#9B3B2E"/>`;
+  if(mood==='wince') o+=`<path d="M43,59 L49,62 M77,59 L71,62" ${f}/><path d="M54,69 Q57,66 60,69 Q63,72 66,69" ${f}/>`+(t>=1?`<ellipse cx="60" cy="60" rx="1.6" ry="2.1" fill="${ST}" opacity=".7"/>`:'');
+  if(bubble) o+=`<path d="M86,-4 h34 a8,8 0 0 1 8,8 v18 a8,8 0 0 1 -8,8 h-24 l-8,8 v-8 h-2 a8,8 0 0 1 -8,-8 v-18 a8,8 0 0 1 8,-8 z" fill="#195E3F"/><text x="103" y="20" text-anchor="middle" font-size="20" font-weight="700" fill="#fff" font-family="Geeza Pro,Noto Naskh Arabic,sans-serif">ك</text>`;
+  const vb = view==='close' ? '4 14 112 64' : (bubble ? '0 -6 132 140' : '0 6 120 128');
+  return `<svg viewBox="${vb}" role="img" aria-label="ShuFee Words coffee cup, ${mood}" focusable="false">${o}</svg>`;
+}
+function wince(el){ // steam droops over the rim like wet hair
+  if(reduce){el.innerHTML=cupSVG('wince',1,'close');return}
+  const t0=performance.now();(function f(now){const raw=Math.min(1,(now-t0)/900),t=raw*raw*(3-2*raw);el.innerHTML=cupSVG('wince',t,'close');if(raw<1)requestAnimationFrame(f)})(t0);
+}
+document.querySelectorAll('[data-cup]').forEach(el=>{el.innerHTML=cupSVG(el.dataset.cup,0,el.dataset.view,!!el.dataset.steam&&!reduce,!!el.dataset.bubble)});
+document.querySelector('.brand [data-cup]').style.cssText='display:inline-block;width:40px;height:40px';
+
+/* ---------- word marquee (from the app's starter themes) ---------- */
+const words=[["2ahwe","قهوة","coffee"],["shay","شاي","tea"],["may","ماي","water"],["3asir","عصير","juice"],["7alib","حليب","milk"],["jibne","جبنة","cheese"],["zetoun","زيتون","olives"],["toum","توم","garlic"],["tiffe7","تفاح","apples"],["tirwi2a","ترويقة","breakfast"],["ghada","غدا","lunch"],["3asha","عشا","dinner"],["tayyib","طيب","delicious"],["ju3an","جعان","hungry"],["su77tak!","صحتك!","cheers!"],
+["mar7aba!","مرحبا!","hello!"],["kifak?","كيفك؟","how are you?"],["shukran","شكرا","thank you"],["law sama7it","لو سمحت","please"],["tfaddal","تفضل","here you are"],["ahla u sahla!","أهلا وسهلا!","welcome!"],["bay!","باي!","goodbye!"],["imm","إم","mother"],["bayy","بي","father"],["3ayle","عيلة","family"],["7abibi","حبيبي","darling"],["bukra","بكرا","tomorrow"],["mberi7","مبارح","yesterday"],["wen","وين","where"],["shou","شو","what"],["ghali","غالي","expensive"],["sou2","سوق","market"],["matar","مطار","airport"],["yamin","يمين","right"],["yasar","يسار","left"]];
+const chip=v=>`<span class="chip"><b>${v[0]}</b><span class="ar" lang="ar">${v[1]}</span><i>${v[2]}</i></span>`;
+const half=15,a=words.slice(0,half),b=words.slice(half);
+document.getElementById('t1').innerHTML=(a.map(chip).join('')).repeat(2);
+document.getElementById('t2').innerHTML=(b.map(chip).join('')).repeat(2);
+document.querySelectorAll('.track').forEach((t,i)=>{[...t.children].slice(i?b.length:a.length).forEach(c=>c.setAttribute('aria-hidden','true'))});
+
+/* ---------- speech bubble cycles through words ---------- */
+(()=>{const bub=document.getElementById('bubble'),ar=document.getElementById('bub-ar'),lat=document.getElementById('bub-lat');if(reduce)return;let k=0;
+ const list=[["قهوة","2ahwe · coffee"],["شكرا","shukran · thank you"],["مرحبا!","mar7aba! · hello!"],["بكرا","bukra · tomorrow"],["حبيبي","7abibi · darling"],["شو يعني؟","shou ya3ni? · what does it mean?"]];
+ setInterval(()=>{bub.classList.add('swap');setTimeout(()=>{k=(k+1)%list.length;ar.textContent=list[k][0];lat.textContent=list[k][1];bub.classList.remove('swap')},350)},2800)})();
+
+/* ---------- reveal on scroll + counters ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);if(e.target.id==='stats')count()}}),{threshold:.18});
+document.querySelectorAll('.reveal,.stagger').forEach(el=>io.observe(el));
+function count(){if(reduce)return;document.querySelectorAll('[data-count]').forEach(el=>{const n=+el.dataset.count,sep=!!el.dataset.sep,t0=performance.now(),d=1400;(function f(now){const p=Math.min(1,(now-t0)/d),e=1-Math.pow(1-p,3),v=Math.round(n*e);el.textContent=sep?v.toLocaleString('en-US'):v;if(p<1)requestAnimationFrame(f)})(t0)})}
+
+/* ---------- scroll-linked motion: progress bar, parallax letters, tilting cup, tour ---------- */
+const nav=document.querySelector('nav.top'),bar=document.getElementById('progress'),cup=document.getElementById('bigcup'),floats=[...document.querySelectorAll('.float')];
+const shots=[...document.querySelectorAll('#tourscreen .shot')],steps=[...document.querySelectorAll('.step')];let cur=0,ticking=false;
+function onScroll(){ticking=false;const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;
+  bar.style.transform=`scaleX(${h>0?y/h:0})`;nav.classList.toggle('scrolled',y>8);
+  if(!reduce){floats.forEach(f=>f.style.transform=`translateY(${-y*0.25*f.dataset.depth}px) rotate(${y*0.02*f.dataset.depth}deg)`);if(cup)cup.style.transform=`translateY(${y*0.12}px) rotate(${Math.min(y*0.02,8)}deg)`}
+  let best=0,bd=1e9;const mid=innerHeight*0.5;steps.forEach((s,i)=>{const r=s.getBoundingClientRect(),d=Math.abs(r.top+r.height/2-mid);if(d<bd){bd=d;best=i}});
+  if(best!==cur&&shots.length){shots[cur].classList.remove('on');shots[best].classList.add('on');cur=best}}
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});onScroll();
+
+/* ---------- Match, inside a phone ---------- */
+(()=>{
+ const rounds=[{topic:'Food and drink',pairs:[['2ahwe','قهوة','coffee'],['shay','شاي','tea'],['may','ماي','water'],['jibne','جبنة','cheese']],order:[2,0,3,1]},
+               {topic:'Hello and thank you',pairs:[['shukran','شكرا','Thank you.'],['kifak?','كيفك؟','How are you?'],['bukra','بكرا','tomorrow'],['ghali','غالي','expensive']],order:[1,3,0,2]}];
+ const $=id=>document.getElementById(id),segs=[...document.querySelectorAll('#segs i')];
+ let r=0,sel=null,done=new Set(),missed=new Set(),firstTotal=0,lock=false;
+ function tile(kind,idx){const p=rounds[r].pairs[idx],b=document.createElement('button');b.type='button';b.className='tile'+(kind==='m'?' mean':'');b.dataset.kind=kind;b.dataset.idx=idx;
+  if(kind==='w'){b.innerHTML=`<span class="lat">${p[0]}</span><span class="ar" lang="ar" dir="rtl">${p[1]}</span>`;b.setAttribute('aria-label',`${p[0]}, ${p[1]}`)}else{b.textContent=p[2]}
+  if(done.has(idx)){b.classList.add('done');b.disabled=true}
+  b.addEventListener('click',()=>tap(b));return b}
+ function render(){const R=rounds[r];$('m-pill').textContent=R.topic+' · Match';$('m-title').textContent=`Match · round ${r+1} of 2`;
+  segs.forEach((s,k)=>s.className=k<r?'ok':(k===r?'now':''));
+  const box=$('tiles');box.replaceChildren();for(let k=0;k<4;k++){box.append(tile('w',k));box.append(tile('m',R.order[k]))}
+  $('m-next').disabled=done.size<4;$('nextlbl').textContent=done.size<4?'Pair all four words':(r===1?'See how you did':'Continue')}
+ function tap(b){if(lock||b.disabled)return;
+  if(!sel||sel.dataset.kind===b.dataset.kind){document.querySelectorAll('.tile.sel').forEach(t=>t.classList.remove('sel'));sel=b;b.classList.add('sel');return}
+  const w=sel.dataset.kind==='w'?sel:b,m=sel.dataset.kind==='m'?sel:b,wi=+w.dataset.idx,mi=+m.dataset.idx,R=rounds[r];sel=null;
+  if(wi===mi){done.add(wi);if(!missed.has(wi))firstTotal++;[w,m].forEach(t=>{t.classList.remove('sel');t.classList.add('done');t.disabled=true});
+   if(done.size===4){const all=[...Array(4).keys()].every(k=>!missed.has(k));showFb(true,all?'Sa7! Every pair, first time.':'Sa7! All four matched.',all?'':`${4-[...missed].length} of 4 right the first time.`);$('m-next').disabled=false;$('nextlbl').textContent=r===1?'See how you did':'Continue';$('m-next').focus()}
+   else hideFb()}
+  else{missed.add(wi);lock=true;[w,m].forEach(t=>{t.classList.remove('sel');t.classList.add('miss')});
+   showFb(false,'Not quite.',`${R.pairs[wi][0]} means “${R.pairs[wi][2].replace(/\.$/,'')}.” Try again.`);
+   setTimeout(()=>{[w,m].forEach(t=>t.classList.remove('miss'));lock=false},700)}}
+ function showFb(ok,title,note){const fb=$('fb');fb.className='fb show '+(ok?'good':'bad');$('fbtitle').textContent=title;$('fbnote').textContent=note;if(ok)$('fbcup').innerHTML=cupSVG('cheer',0,'close');else wince($('fbcup'))}
+ function hideFb(){$('fb').className='fb'}
+ $('m-next').onclick=()=>{if(done.size<4)return;hideFb();
+  if(r===1){segs.forEach(s=>s.className='ok');$('rcup').innerHTML=cupSVG(firstTotal>=6?'cheer':'happy',0,'full',!reduce,true);$('m-score').textContent=`${firstTotal} of 8 first time. ${firstTotal===8?'Sa7tein!':'A little more Lebanese than before.'}`;$('m-result').classList.add('show');$('m-score').focus()}
+  else{r=1;done=new Set();missed=new Set();sel=null;render();$('m-title').focus()}};
+ $('m-restart').onclick=()=>{r=0;done=new Set();missed=new Set();sel=null;firstTotal=0;$('m-result').classList.remove('show');hideFb();render();$('m-title').focus()};
+ render();
+})();
+</script>
+</body></html>
